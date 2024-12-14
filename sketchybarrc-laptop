@@ -9,6 +9,7 @@ source "$PLUGIN_SHARED_DIR/icons.sh"
 SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
 
 sketchybar --bar \
+    display=all \
     height=32 \
     color=0x00000000 \
     margin=0 \
@@ -16,6 +17,8 @@ sketchybar --bar \
     padding_left=5 \
     padding_right=5 \
     notch_width=188 \
+    associated_display=1
+
 # Alternatiive background colors
 # label.color=0xffffffff
 # background.color=0x9924273a
@@ -33,6 +36,49 @@ sketchybar --default \
     label.y_offset=0 \
     label.padding_left=0 \
     label.padding_right=5
+    --subscribe system_woke
+
+# sketchybar --add item current_space left \
+#     --set current_space \
+#     background.color=0xfff5a97f \
+#     icon.color=0xff24273a \
+#     label.drawing=off \
+#     script="$PLUGIN_SHARED_DIR/current_space.sh" \
+#     --subscribe current_space front_app_switched mouse.clicked 
+
+
+sketchybar --add event window_change
+
+COLORS_SPACE=($COLOR_YELLOW $COLOR_CYAN $COLOR_MAGENTA $COLOR_WHITE $COLOR_BLUE $COLOR_RED $COLOR_GREEN)
+
+for i in {0..10};
+do
+  sid=$(($i+1))
+  PAD_LEFT=4
+  if [[ $i == 0 ]]; then
+    PAD_LEFT=8
+  elif [[ $i == $(($LENGTH-1)) ]]; then
+    PAD_RIGHT=10
+  fi
+
+  sketchybar --add space space.$sid left                                       \
+             --set       space.$sid                                            \
+                script="$PLUGIN_SHARED_DIR/space_display.sh"                   \
+                                    associated_space=$sid                      \
+                                    background.border_width=0                  \
+                                    background.corner_radius=6                 \
+                                    background.height=12                       \
+                                    icon.padding_left=0                        \
+                                    icon.padding_right=0                       \
+                                    label.padding_left=0                       \
+                                    label.padding_right=10                      \
+                                    background.width=8                       \
+                                    background.padding_left=$PAD_LEFT          \
+             --subscribe space.$sid front_app_switched 
+done
+
+sketchybar --add bracket spaces '/space\..*/' \
+    --subscribe spaces front_app_switched window_change
 
 sketchybar --add event spotify_change $SPOTIFY_EVENT \
     --add item spotify e \
@@ -46,13 +92,12 @@ sketchybar --add event spotify_change $SPOTIFY_EVENT \
     script="$PLUGIN_DIR/spotify.sh" \
     --subscribe spotify spotify_change mouse.clicked
 
-sketchybar --add item current_space left \
-    --set current_space \
-    background.color=0xfff5a97f \
-    icon.color=0xff24273a \
-    label.drawing=off \
-    script="$PLUGIN_SHARED_DIR/current_space.sh" \
-    --subscribe current_space space_change mouse.clicked
+sketchybar --add item sep left \
+    --set sep \
+    background.color=0x00000000 \
+    background.padding_left=0 \
+    background.padding_right=0 \
+    width=5 \
 
 sketchybar --add item front_app left \
     --set front_app \
@@ -134,7 +179,7 @@ sketchybar --add item volume right \
     icon.color=0xff8aadf4 \
     label.drawing=true \
     script="$PLUGIN_SHARED_DIR/volume.sh" \
-    --subscribe volume volume_change mouse.clicked mouse.scroll
+    --subscribe volume volume_change mouse.clicked
 
 cpu=(
 	label.font="$FONT:Heavy:12"
@@ -168,4 +213,4 @@ open -a Rectangle
 
 ##### Finalizing Setup #####
 sketchybar --update
-sketchybar --trigger space_change
+sketchybar --trigger space_change display_change

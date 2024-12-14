@@ -65,11 +65,24 @@ case $INFO in
     ;;
 "GitKraken")
     ICON_PADDING_RIGHT=5
-    ICON=
+    ICON=
     ;;
 "JetBrains Rider")
     ICON_PADDING_RIGHT=4
     ICON=
+    ;;
+"Simulator")
+    ICON_PADDING_RIGHT=4
+    ICON_SIZE=16
+    ICON=
+    ;;
+"Docker Desktop")
+    ICON_PADDING_RIGHT=5
+    ICON=
+    ;;
+"Postman")
+    ICON_PADDING_RIGHT=5
+    ICON=
     ;;
 "WhatsApp")
     ICON_PADDING_RIGHT=4

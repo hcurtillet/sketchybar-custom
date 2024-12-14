@@ -28,14 +28,6 @@ case "$SENDER" in
         osascript -e 'set volume output muted true'
     fi
     ;;
-"mouse.scroll")
-    current=$(osascript -e 'output muted of (get volume settings)')
-    if [ "$current" = true ]; then
-        osascript -e 'set volume output muted false'
-    else
-        osascript -e 'set volume output muted true'
-    fi
-    ;;
 *)
     update_space
     ;;
