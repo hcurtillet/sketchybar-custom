@@ -36,6 +36,7 @@ export MAUVE=0xffc6a0f6
 export PINK=0xfff5bde6
 export FLAMINGO=0xfff0c6c6
 export ROSEWATER=0xfff4dbd6
+export GRAY=0xff939ab7
 
 export RANDOM_CAT_COLOR=("$BLUE" "$LAVENDER" "$SAPPHIRE" "$SKY" "$TEAL" "$GREEN" "$YELLOW" "$PEACH" "$MAROON" "$RED" "$MAUVE" "$PINK" "$FLAMINGO" "$ROSEWATER")
 
